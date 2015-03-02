@@ -1,0 +1,92 @@
+<div id="game">
+
+    <%if @loser %>
+      <div class="alert alert-error"><%=@loser%></div>
+    <% end %>
+    <% if @winner %>
+      <div class="alert alert-success"><%=@winner %></div>
+    <% end %>
+    <% if @tie %>
+      <div class="alert alert-info"><%=@tie%></div>
+    <% end %>
+
+
+
+  <% if @play_again %>
+    <p>
+      <strong>Play again?</strong>
+      <% if session[:money].to_i > 0 %>
+        <a href="/bet" class="btn btn-primary">Yes</a>
+      <% else %>
+        <a href="/game_over" class="btn btn-primary">Yes</a>
+      <% end %>
+      <a href="/game_over" class="btn">No</a>
+    </p>
+  <% end %>
+
+
+  <h2>Blacjack!</h2>  
+
+
+  <div class="well">
+  <h4>Dealer's cards are:</h4>
+    <ul class="shift_left">
+      <% session[:dealer_cards].each do |card| %>
+        <% if (session[:turn] != 'dealer' && card == session[:dealer_cards][0]) %>
+          <img src='/images/cards/cover.jpg' class='card_pics' />
+        <% else %>
+          <%= show_card_pic(card) %>
+        <% end %>
+      <% end %>  
+    </ul>
+    <% if @show_dealer_hit_button %>
+      <h5>Dealer has <%= culculate_total(session[:dealer_cards]) %> and will hit.</h5>
+      <form id="dealer_button" action="/game/dealer/hit" method="post">
+        <input type="submit" value="Click to see dealer's next card! &rarr;" class="btn btn-primary" />
+      </form>
+    <% end %>
+  </div>
+
+
+
+  <div class="well" id="player_cards">
+    <h4><%= session[:player_name]%>'s cards are:</h4>
+    <ul class="shift_left">
+      <% session[:player_cards].each do |card| %>
+        <%= show_card_pic(card) %>
+      <% end %>  
+    </ul>
+    <% if @player_no_bust && session[:turn] == 'dealer' %>
+      <h5 class="bet_status">
+        <%= session[:player_name]%> stayed at <%=culculate_total(session[:player_cards])%>. <%=session[:player_name]%> has <strong>$<%= session[:money] %></strong> and bet <strong>$<%=session[:how_much]%></strong> this round.
+      </h5>
+    <% end %>
+  </div>
+
+
+
+  <% if @show_hit_or_stay_buttons %>
+    <div>
+      <h5 class="bet_status">
+        <%=session[:player_name]%>'s total is <%=culculate_total(session[:player_cards]) %>. What would <%=session[:name]%> like to do?
+      </h5>
+      <p class="bet_status" id="small-text">
+        <%=session[:player_name]%> has <strong>$<%= session[:money] %></strong>.Bet amount this round: <strong>$<%=session[:how_much]%></strong> 
+      </p>
+    </div>
+    <form action="/game/player/hit" method="post" id="hit_form">
+      <input type="submit" class="btn-large btn btn-success" value="Hit" />
+    </form>
+
+    <form action="/game/player/stay" method="post" id="stay_form">
+      <input type="submit" class="btn-large btn btn-warning" value="Stay" />
+    </form>
+  <% end %>
+
+
+</div>
+
+
+
+
+

@@ -1,0 +1,33 @@
+#hit_form {
+  display: inline-block;
+  float: left;
+  margin-right: 10px;
+}
+
+#stay_form {
+  display: inline-block;
+  float: left;
+  margin-right: 10px;
+}
+
+img.card_pics{
+  margin-right:5px;
+  margin-left: 0;
+  margin-bottom: 10px;
+}
+
+.play_again{
+  display: inline-block;
+}
+
+ul.shift_left{
+  margin-left: 0;
+}
+
+.bet_status{
+  display: inline-block;
+}
+
+#small-text{
+  color: gray;
+}
