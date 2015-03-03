@@ -24,7 +24,6 @@ function player_stays() {
       type: "POST",
       url: "/game/player/stay"
     }).done(function(msg) {
-      alert(msg);
       $('#game').replaceWith(msg)
     });
 
@@ -39,7 +38,6 @@ function dealer_hit() {
       type: "POST",
       url: '/game/dealer/hit'
     }).done(function(msg) {
-      alert(msg);
       $('#game').replaceWith(msg)
     });
 
